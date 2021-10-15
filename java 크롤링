@@ -1,0 +1,35 @@
+package com.vision.common;
+
+import java.io.IOException;
+import java.util.Iterator;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class Crawling {
+	private static Crawling instance = new Crawling();
+	private Crawling() {}
+	public static Crawling getInstance() {
+		return instance;
+	}
+	public String[] getList() {
+		Document doc = null;
+		String url = "https://comic.naver.com/index";
+		
+		try {
+			doc = Jsoup.connect(url).get();
+			Elements ele = doc.getElementsByClass("genreRecomImg2");
+			
+			for(Element element : ele) {
+			System.out.println(element.select("img").attr("src"));
+			}
+			Elements ele2 = doc.getElementsByClass("genreRecomInfo2");
+			for(Element element2 : ele2) {
+				System.out.println(element2.select("h6.title>a>span").text());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
